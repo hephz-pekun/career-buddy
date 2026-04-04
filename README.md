@@ -26,7 +26,7 @@ npm install
 
 ### 2. set up supabase
 
-1. go to [supabase.com](https://supabase.com) and create a new project
+1. go to [supabase.com](httpscp .env.example .env://supabase.com) and create a new project
 2. in the SQL editor, run the contents of `supabase/schema.sql`
 3. in Storage, create a private bucket called `resumes`
 4. copy your project URL and anon key from Settings → API
