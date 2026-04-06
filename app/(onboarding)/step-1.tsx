@@ -12,9 +12,9 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useAppStore } from '@/store'
-import { Button } from '@/components/ui'
-import { Colors, Typography, Spacing, Radius } from '@/constants'
+import { useAppStore } from '../../src/store'
+import { Button } from '../../src/components/ui'
+import { Colors, Typography, Spacing, Radius } from '../../src/constants'
 
 const schema = z.object({
   name:   z.string().min(1, 'just your name — that\'s all we need!'),
@@ -222,3 +222,6 @@ const styles = StyleSheet.create({
 
   nextBtn: { marginTop: Spacing.xl },
 })
+
+
+

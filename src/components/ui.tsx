@@ -1,3 +1,4 @@
+import { Colors, Typography, Spacing, Radius, Shadows } from '../constants'
 import React from 'react'
 import {
   View,
@@ -8,7 +9,6 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native'
-import { Colors, Typography, Spacing, Radius, Shadows } from '@/constants'
 
 // ─── Button ───────────────────────────────────────────────────────────────────
 
@@ -291,3 +291,7 @@ const styles = StyleSheet.create({
   loadingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing['3xl'] },
   loadingText:      { fontSize: Typography.sm, color: Colors.gray500, marginTop: Spacing.md, textAlign: 'center' },
 })
+
+
+
+

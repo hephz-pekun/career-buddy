@@ -9,9 +9,9 @@ import {
 } from 'react-native'
 import { useRouter } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useAppStore } from '@/store'
-import { Button, Chip } from '@/components/ui'
-import { Colors, Typography, Spacing, Radius, CAREER_FIELDS, JOB_TYPES } from '@/constants'
+import { useAppStore } from '../../src/store'
+import { Button, Chip } from '../../src/components/ui'
+import { Colors, Typography, Spacing, Radius, CAREER_FIELDS, JOB_TYPES } from '../../src/constants'
 
 function StepDots({ current }: { current: number }) {
   return (
@@ -145,3 +145,5 @@ const styles = StyleSheet.create({
   },
   nextBtn: { marginTop: Spacing.sm },
 })
+
+

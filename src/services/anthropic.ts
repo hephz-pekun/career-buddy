@@ -6,7 +6,7 @@ import type {
   AIDayPlanResponse,
   MoodType,
   UserProfile,
-} from '@/types'
+} from '../../src/constants'
 
 const API_KEY =
   Constants.expoConfig?.extra?.anthropicApiKey ??
@@ -34,12 +34,11 @@ async function callClaude(
     body.tools = [{ type: 'web_search_20250305', name: 'web_search' }]
   }
 
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('https://ntbymxzahqzmuqwilqyo.supabase.co/functions/v1/claude-proxy', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': API_KEY,
-      'anthropic-version': '2023-06-01',
+      'Authorization': `Bearer ${process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
     },
     body: JSON.stringify(body),
   })
@@ -71,8 +70,7 @@ export async function extractResumeSkills(
 ): Promise<AISkillExtractResponse> {
   const raw = await callClaude(
     'You are a resume parser. Extract skills, tools, technologies, and experiences. Return ONLY valid JSON — no markdown, no explanation.',
-    `Resume content:\n${resumeText.slice(0, 4000)}\n\nStudent already selected these fields: ${existingFields.join(', ') || 'none yet'}\n\nReturn JSON: {"skills":["up to 20 short skill strings"],"inferredFields":["2-4 career field strings inferred from resume"],"inferredJobTypes":["1-3 job type strings"]}`,
-  )
+    'Resume content (may be a PDF filename if text extraction failed):\n' + resumeText.slice(0, 4000) + '\n\nIMPORTANT: Always return valid JSON even if resume content is limited. Use reasonable defaults.'  )
   return parseJSON<AISkillExtractResponse>(raw)
 }
 
@@ -91,6 +89,7 @@ Student profile:
 - Location preference: ${profile.location || 'anywhere'}
 - Skills from resume: ${profile.skills.join(', ') || 'not provided'}
 
+Today is ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}.
 Generate exactly 6 realistic, specific job or internship matches. Prioritize roles where their skills are directly applicable. Return ONLY a JSON array:
 [{"title":"","company":"","type":"internship|full-time|part-time|remote","field":"","location":"","matchScore":60-99,"matchReason":"1 warm sentence citing specific resume skills","tags":["3 short strings"],"source":"ai"}]`,
   )
@@ -130,7 +129,7 @@ Student profile:
 - Skills: ${profile.skills.join(', ') || 'not provided'}
 - Interests: ${profile.fields.join(', ') || 'general'}
 
-Generate 4 realistic scholarship matches with deadlines in the next 12 months. Return ONLY JSON array:
+Today's date is ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}. Generate 4 realistic scholarship matches with deadlines in the next 12 months from today. Return ONLY JSON array:
 [{"name":"","organization":"","amount":"$X,XXX","type":"merit|need|identity|essay","deadlineDate":"YYYY-MM-DD","deadlineLabel":"Month YYYY","matchReason":"1 warm sentence","tags":["3 strings"],"matchScore":60-99,"source":"ai"}]`,
   )
   const scholarships = parseJSON<
@@ -234,3 +233,4 @@ export async function generateInterviewFeedback(
     `Question: "${question}"\nAnswer: "${answer}"`,
   )
 }
+

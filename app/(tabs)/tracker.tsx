@@ -12,11 +12,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { format } from 'date-fns'
-import { useAppStore } from '@/store'
-import { Card, Button, EmptyState } from '@/components/ui'
-import { Colors, Typography, Spacing, Radius, Shadows } from '@/constants'
-import { generateRejectionReframe } from '@/services/anthropic'
-import type { ApplicationStatus, ScholarshipStatus } from '@/types'
+import { useAppStore } from '../../src/store'
+import { Card, Button, EmptyState } from '../../src/components/ui'
+import { Colors, Typography, Spacing, Radius, Shadows } from '../../src/constants'
+import { generateRejectionReframe } from '../../src/services/anthropic'
+import type { ApplicationStatus, ScholarshipStatus } from '../../src/types'
 
 type TrackerTab = 'jobs' | 'scholarships'
 

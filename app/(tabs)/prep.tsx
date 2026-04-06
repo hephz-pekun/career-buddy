@@ -11,11 +11,11 @@ import {
   Platform,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useAppStore } from '@/store'
-import { Card, Button, LoadingSpinner } from '@/components/ui'
-import { Colors, Typography, Spacing, Radius } from '@/constants'
-import { generateInterviewFeedback } from '@/services/anthropic'
-import type { PrepMood, QuestionType } from '@/types'
+import { useAppStore } from '../../src/store'
+import { Card, Button, LoadingSpinner } from '../../src/components/ui'
+import { Colors, Typography, Spacing, Radius } from '../../src/constants'
+import { generateInterviewFeedback } from '../../src/services/anthropic'
+import type { PrepMood, QuestionType } from '../../src/types'
 
 const PREP_MOODS: { key: PrepMood; emoji: string; label: string }[] = [
   { key: 'pumped',   emoji: '🔥', label: 'pumped'       },

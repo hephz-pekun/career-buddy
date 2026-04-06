@@ -10,7 +10,7 @@ import type {
   MoodEntry,
   Activity,
   DayPlan,
-} from '@/types'
+} from '../types'
 
 // ─── Auth slice ───────────────────────────────────────────────────────────────
 
@@ -215,3 +215,5 @@ export const selectCheckinStreak = (s: AppStore): number => {
   }
   return streak
 }
+
+

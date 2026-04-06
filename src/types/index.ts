@@ -1,163 +1,179 @@
-import { Dimensions } from 'react-native'
+// ─── User & Profile ───────────────────────────────────────────────────────────
 
-export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window')
+export interface UserProfile {
+  id: string
+  name: string
+  email: string
+  school?: string
+  major?: string
+  location: string
+  fields: string[]
+  jobTypes: string[]
+  wantsScholarships: boolean
+  resumeUrl?: string
+  skills: string[]
+  createdAt: string
+  updatedAt: string
+}
 
-// ─── Colors ───────────────────────────────────────────────────────────────────
+// ─── Mood ─────────────────────────────────────────────────────────────────────
 
-export const Colors = {
-  // Brand
-  primary: '#6366F1',       // indigo — calm, modern
-  primaryLight: '#EEF2FF',
-  primaryDark: '#4338CA',
+export type MoodType =
+  | 'motivated'
+  | 'okay'
+  | 'overwhelmed'
+  | 'tired'
+  | 'stressed'
+  | 'hopeful'
 
-  // Semantic
-  success: '#22C55E',
-  successLight: '#DCFCE7',
-  warning: '#F59E0B',
-  warningLight: '#FEF3C7',
-  danger: '#EF4444',
-  dangerLight: '#FEE2E2',
-  info: '#3B82F6',
-  infoLight: '#DBEAFE',
+export interface MoodEntry {
+  id: string
+  userId: string
+  mood: MoodType
+  note?: string
+  date: string // YYYY-MM-DD
+  createdAt: string
+}
 
-  // Neutrals
-  gray900: '#0F172A',
-  gray800: '#1E293B',
-  gray700: '#334155',
-  gray600: '#475569',
-  gray500: '#64748B',
-  gray400: '#94A3B8',
-  gray300: '#CBD5E1',
-  gray200: '#E2E8F0',
-  gray100: '#F1F5F9',
-  gray50:  '#F8FAFC',
-  white:   '#FFFFFF',
+export interface DayPlan {
+  greeting: string
+  subtitle: string
+  activities: Activity[]
+}
 
-  // Mood colors
-  mood: {
-    motivated: '#22C55E',
-    okay:       '#3B82F6',
-    overwhelmed:'#F97316',
-    tired:      '#94A3B8',
-    stressed:   '#EF4444',
-    hopeful:    '#86EFAC',
-  },
-} as const
+export interface Activity {
+  id: string
+  title: string
+  desc: string
+  tag: 'easy' | 'medium' | 'focus' | 'rest'
+  action: 'matches' | 'tracker' | 'prep' | null
+  done: boolean
+}
 
-// ─── Typography ───────────────────────────────────────────────────────────────
+// ─── Jobs ─────────────────────────────────────────────────────────────────────
 
-export const Typography = {
-  // Font sizes
-  xs:   11,
-  sm:   13,
-  base: 15,
-  md:   16,
-  lg:   18,
-  xl:   22,
-  '2xl':28,
-  '3xl':34,
+export type JobSource = 'ai' | 'live'
+export type JobType = 'internship' | 'full-time' | 'part-time' | 'remote' | 'hybrid' | 'on-site'
+export type ApplicationStatus = 'applied' | 'interview' | 'offer' | 'rejected'
 
-  // Line heights
-  tight:   1.2,
-  normal:  1.5,
-  relaxed: 1.7,
+export interface JobMatch {
+  id: string
+  title: string
+  company: string
+  type: JobType
+  field: string
+  location: string
+  matchScore: number
+  matchReason: string
+  tags: string[]
+  source: JobSource
+  url?: string
+  postedDate?: string
+}
 
-  // Weights (as strings for RN)
-  regular:  '400' as const,
-  medium:   '500' as const,
-  semibold: '600' as const,
-  bold:     '700' as const,
-} as const
+export interface JobApplication {
+  id: string
+  userId: string
+  role: string
+  company: string
+  status: ApplicationStatus
+  interviewDate?: string
+  interviewTime?: string
+  notes?: string
+  jobMatchId?: string
+  createdAt: string
+  updatedAt: string
+}
 
-// ─── Spacing ──────────────────────────────────────────────────────────────────
+// ─── Scholarships ─────────────────────────────────────────────────────────────
 
-export const Spacing = {
-  xs:  4,
-  sm:  8,
-  md:  12,
-  lg:  16,
-  xl:  20,
-  '2xl':24,
-  '3xl':32,
-  '4xl':40,
-  '5xl':48,
-} as const
+export type ScholarshipType = 'merit' | 'need' | 'identity' | 'essay'
+export type ScholarshipStatus = 'pending' | 'submitted' | 'awarded' | 'rejected'
 
-// ─── Border radius ────────────────────────────────────────────────────────────
+export interface ScholarshipMatch {
+  id: string
+  name: string
+  organization: string
+  amount: string
+  type: ScholarshipType
+  deadlineDate?: string
+  deadlineLabel?: string
+  matchReason: string
+  tags: string[]
+  matchScore: number
+  source: JobSource
+  url?: string
+}
 
-export const Radius = {
-  sm:   6,
-  md:   10,
-  lg:   14,
-  xl:   20,
-  full: 9999,
-} as const
+export interface ScholarshipApplication {
+  id: string
+  userId: string
+  name: string
+  org: string
+  deadline?: string
+  amount?: string
+  status: ScholarshipStatus
+  notes?: string
+  createdAt: string
+  updatedAt: string
+}
 
-// ─── Shadows ──────────────────────────────────────────────────────────────────
+// ─── Prep ─────────────────────────────────────────────────────────────────────
 
-export const Shadows = {
-  sm: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  md: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 3,
-  },
-  lg: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 12,
-    elevation: 6,
-  },
-} as const
+export type PrepMood = 'pumped' | 'nervous' | 'tired' | 'blank'
+export type QuestionType = 'behavioral' | 'strengths' | 'motivation' | 'situational'
 
-// ─── Mood config ──────────────────────────────────────────────────────────────
+export interface PrepSession {
+  id: string
+  userId: string
+  question: string
+  answer: string
+  aiFeedback?: string
+  mood?: PrepMood
+  createdAt: string
+}
 
-export const MOOD_CONFIG = {
-  motivated:  { emoji: '✅', label: 'motivated',  color: Colors.mood.motivated  },
-  okay:       { emoji: '🙂', label: 'okay',        color: Colors.mood.okay       },
-  overwhelmed:{ emoji: '😕', label: 'overwhelmed', color: Colors.mood.overwhelmed},
-  tired:      { emoji: '😴', label: 'tired',       color: Colors.mood.tired      },
-  stressed:   { emoji: '😣', label: 'stressed',    color: Colors.mood.stressed   },
-  hopeful:    { emoji: '🌱', label: 'hopeful',     color: Colors.mood.hopeful    },
-} as const
+// ─── Navigation ───────────────────────────────────────────────────────────────
 
-// ─── Career fields ────────────────────────────────────────────────────────────
+export type RootStackParamList = {
+  '(onboarding)': undefined
+  '(tabs)': undefined
+}
 
-export const CAREER_FIELDS = [
-  'software engineering',
-  'product management',
-  'data science',
-  'marketing',
-  'finance',
-  'design / UX',
-  'consulting',
-  'nonprofit / social impact',
-  'research',
-  'healthcare',
-  'education',
-  'law / pre-law',
-] as const
+export type OnboardingStackParamList = {
+  'step-1': undefined
+  'step-2': undefined
+  'step-3': undefined
+}
 
-export const JOB_TYPES = [
-  'internship',
-  'full-time',
-  'part-time',
-  'remote',
-  'hybrid',
-  'on-site',
-] as const
+export type TabParamList = {
+  checkin: undefined
+  matches: undefined
+  tracker: undefined
+  prep: undefined
+  history: undefined
+}
 
-export const SCHOLARSHIP_PREFERENCES = [
-  'yes, definitely',
-  'maybe, show me options',
-  'just jobs for now',
-] as const
+// ─── API responses ────────────────────────────────────────────────────────────
+
+export interface AIJobMatchResponse {
+  jobs: Omit<JobMatch, 'id'>[]
+}
+
+export interface AIScholarshipResponse {
+  scholarships: Omit<ScholarshipMatch, 'id'>[]
+}
+
+export interface AIDayPlanResponse {
+  greeting: string
+  subtitle: string
+  activities: Omit<Activity, 'id' | 'done'>[]
+}
+
+export interface AISkillExtractResponse {
+  skills: string[]
+  inferredFields: string[]
+  inferredJobTypes: string[]
+}
+
+

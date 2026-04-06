@@ -10,22 +10,22 @@ import {
   RefreshControl,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useAppStore, selectAllJobs, selectAllScholarships } from '@/store'
+import { useAppStore, selectAllJobs, selectAllScholarships } from '../../src/store'
 import {
   Card,
   Badge,
   Button,
   EmptyState,
   LoadingSpinner,
-} from '@/components/ui'
-import { Colors, Typography, Spacing, Radius, Shadows } from '@/constants'
+} from '../../src/components/ui'
+import { Colors, Typography, Spacing, Radius, Shadows } from '../../src/constants'
 import {
   generateAIJobs,
   fetchLiveJobs,
   generateAIScholarships,
   fetchLiveScholarships,
-} from '@/services/anthropic'
-import type { JobMatch, ScholarshipMatch } from '@/types'
+} from '../../src/services/anthropic'
+import type { JobMatch, ScholarshipMatch } from '../../src/types'
 import { differenceInDays, parseISO } from 'date-fns'
 
 type Tab = 'jobs' | 'scholarships'
