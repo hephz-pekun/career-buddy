@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BrandHeader } from '../../src/components/brand'
 import { useAppStore } from '../../src/store'
 import { Card, Button, LoadingSpinner } from '../../src/components/ui'
 import { Colors, Typography, Spacing, Radius } from '../../src/constants'
@@ -107,6 +108,7 @@ export default function PrepScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <BrandHeader title="Interview Prep" />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
@@ -218,7 +220,7 @@ export default function PrepScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe:   { flex: 1, backgroundColor: Colors.gray50 },
+  safe:   { flex: 1, backgroundColor: Colors.bg },
   scroll: { padding: Spacing.lg, paddingBottom: Spacing['4xl'] },
 
   ethicsNote: {
@@ -238,7 +240,7 @@ const styles = StyleSheet.create({
   moodRow: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.md },
   moodCard: {
     flex: 1,
-    backgroundColor: Colors.gray50,
+    backgroundColor: Colors.bg,
     borderWidth: 1,
     borderColor: Colors.gray200,
     borderRadius: Radius.md,
@@ -253,7 +255,7 @@ const styles = StyleSheet.create({
   moodLabelSelected:{ color: Colors.primary, fontWeight: Typography.semibold },
 
   moodTip: {
-    backgroundColor: Colors.gray50,
+    backgroundColor: Colors.bg,
     borderRadius: Radius.md,
     padding: Spacing.sm,
     marginBottom: Spacing.md,
@@ -270,7 +272,7 @@ const styles = StyleSheet.create({
   getQuestionBtn: { marginTop: Spacing.sm },
 
   questionBox: {
-    backgroundColor: Colors.gray50,
+    backgroundColor: Colors.bg,
     borderRadius: Radius.md,
     padding: Spacing.md,
     borderLeftWidth: 3,
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
   },
   questionText: { fontSize: Typography.base, color: Colors.gray800, lineHeight: 24 },
   answerInput: {
-    backgroundColor: Colors.gray50,
+    backgroundColor: Colors.bg,
     borderWidth: 1,
     borderColor: Colors.gray200,
     borderRadius: Radius.md,

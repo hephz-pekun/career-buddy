@@ -1,11 +1,6 @@
 import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
+  View, Text, TextInput, ScrollView, StyleSheet,
+  KeyboardAvoidingView, Platform, TouchableOpacity,
 } from 'react-native'
 import { useRouter } from 'expo-router'
 import { useForm, Controller } from 'react-hook-form'
@@ -13,62 +8,32 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useAppStore } from '../../src/store'
-import { Button } from '../../src/components/ui'
-import { Colors, Typography, Spacing, Radius } from '../../src/constants'
+import { Colors, Typography, Spacing, Radius, Shadows } from '../../src/constants'
+import { OnboardingHeader, StepDots } from '../../src/components/brand'
 
 const schema = z.object({
-  name:   z.string().min(1, 'just your name — that\'s all we need!'),
-  email:  z.string().email('enter a valid email'),
+  name:   z.string().min(1, 'We need your name!'),
+  email:  z.string().email('Enter a valid email'),
   school: z.string().optional(),
   major:  z.string().optional(),
 })
-
 type FormData = z.infer<typeof schema>
-
-// Step indicator component
-function StepDots({ current }: { current: number }) {
-  return (
-    <View style={styles.dots}>
-      {[0, 1, 2].map((i) => (
-        <View
-          key={i}
-          style={[
-            styles.dot,
-            i < current && styles.dotDone,
-            i === current && styles.dotActive,
-          ]}
-        />
-      ))}
-    </View>
-  )
-}
 
 export default function OnboardingStep1() {
   const router = useRouter()
-  const updateProfile = useAppStore((s) => s.updateProfile)
-  const setProfile = useAppStore((s) => s.setProfile)
+  const { setProfile } = useAppStore()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
+  const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { name: '', email: '', school: '', major: '' },
   })
 
   const onNext = handleSubmit((data) => {
     setProfile({
-      id: '',
-      name: data.name,
-      email: data.email,
-      school: data.school ?? '',
-      major: data.major ?? '',
-      location: '',
-      fields: [],
-      jobTypes: [],
-      wantsScholarships: true,
-      skills: [],
+      id: '', name: data.name, email: data.email,
+      school: data.school ?? '', major: data.major ?? '',
+      location: '', fields: [], jobTypes: [],
+      wantsScholarships: true, skills: [],
       resumeUrl: undefined,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -78,109 +43,45 @@ export default function OnboardingStep1() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scroll}
-          keyboardShouldPersistTaps="handled"
-        >
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+          <OnboardingHeader />
           <StepDots current={0} />
 
-          <Text style={styles.heading}>hey there 👋</Text>
-          <Text style={styles.sub}>let's get you set up — takes about 2 minutes.</Text>
+          <Text style={styles.heading}>The basics</Text>
+          <Text style={styles.sub}>Takes about 60 seconds to set up.</Text>
 
-          <Text style={styles.sectionTitle}>first, the basics</Text>
+          <View style={styles.card}>
+            {[
+              { name: 'name' as const, label: 'Your name', placeholder: 'e.g. Jordan Smith', caps: 'words' as const },
+              { name: 'email' as const, label: 'Email address', placeholder: 'you@school.edu', type: 'email-address' as const, caps: 'none' as const },
+              { name: 'school' as const, label: 'School & year', placeholder: 'e.g. UCLA, Junior', opt: true },
+              { name: 'major' as const, label: 'Major', placeholder: 'e.g. Psychology', opt: true },
+            ].map(f => (
+              <Controller key={f.name} control={control} name={f.name} render={({ field: { onChange, value, onBlur } }) => (
+                <View style={styles.fieldGroup}>
+                  <Text style={styles.label}>
+                    {f.label} {f.opt && <Text style={styles.optional}>(optional)</Text>}
+                  </Text>
+                  <TextInput
+                    style={[styles.input, !!errors[f.name] && styles.inputError]}
+                    placeholder={f.placeholder}
+                    placeholderTextColor={Colors.textMuted}
+                    value={value ?? ''}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    keyboardType={f.type}
+                    autoCapitalize={f.caps ?? 'sentences'}
+                  />
+                  {errors[f.name] && <Text style={styles.error}>{errors[f.name]?.message}</Text>}
+                </View>
+              )} />
+            ))}
+          </View>
 
-          <Controller
-            control={control}
-            name="name"
-            render={({ field: { onChange, value, onBlur } }) => (
-              <View style={styles.fieldGroup}>
-                <Text style={styles.label}>what's your name?</Text>
-                <TextInput
-                  style={[styles.input, errors.name && styles.inputError]}
-                  placeholder="e.g. Jordan"
-                  placeholderTextColor={Colors.gray400}
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  autoCapitalize="words"
-                  autoComplete="name"
-                />
-                {errors.name && (
-                  <Text style={styles.error}>{errors.name.message}</Text>
-                )}
-              </View>
-            )}
-          />
-
-          <Controller
-            control={control}
-            name="email"
-            render={({ field: { onChange, value, onBlur } }) => (
-              <View style={styles.fieldGroup}>
-                <Text style={styles.label}>email</Text>
-                <TextInput
-                  style={[styles.input, errors.email && styles.inputError]}
-                  placeholder="you@school.edu"
-                  placeholderTextColor={Colors.gray400}
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoComplete="email"
-                />
-                {errors.email && (
-                  <Text style={styles.error}>{errors.email.message}</Text>
-                )}
-              </View>
-            )}
-          />
-
-          <Controller
-            control={control}
-            name="school"
-            render={({ field: { onChange, value, onBlur } }) => (
-              <View style={styles.fieldGroup}>
-                <Text style={styles.label}>school & year <Text style={styles.optional}>(optional)</Text></Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="e.g. UCLA, Junior"
-                  placeholderTextColor={Colors.gray400}
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                />
-              </View>
-            )}
-          />
-
-          <Controller
-            control={control}
-            name="major"
-            render={({ field: { onChange, value, onBlur } }) => (
-              <View style={styles.fieldGroup}>
-                <Text style={styles.label}>major <Text style={styles.optional}>(optional)</Text></Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="e.g. Psychology, Computer Science"
-                  placeholderTextColor={Colors.gray400}
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                />
-              </View>
-            )}
-          />
-
-          <Button
-            label="next →"
-            onPress={onNext}
-            style={styles.nextBtn}
-          />
+          <TouchableOpacity style={styles.btn} onPress={onNext} activeOpacity={0.85}>
+            <Text style={styles.btnText}>Next →</Text>
+          </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -188,40 +89,21 @@ export default function OnboardingStep1() {
 }
 
 const styles = StyleSheet.create({
-  safe:   { flex: 1, backgroundColor: Colors.gray50 },
+  safe:   { flex: 1, backgroundColor: Colors.bg },
   scroll: { padding: Spacing.xl, paddingBottom: Spacing['4xl'] },
-
-  dots: { flexDirection: 'row', gap: 6, marginBottom: Spacing['2xl'] },
-  dot: {
-    flex: 1,
-    height: 4,
-    borderRadius: Radius.full,
-    backgroundColor: Colors.gray200,
-  },
-  dotDone:   { backgroundColor: Colors.gray400 },
-  dotActive: { backgroundColor: Colors.primary },
-
-  heading:      { fontSize: Typography.xl, fontWeight: Typography.bold, color: Colors.gray900, marginBottom: Spacing.sm },
-  sub:          { fontSize: Typography.sm, color: Colors.gray500, marginBottom: Spacing['2xl'] },
-  sectionTitle: { fontSize: Typography.lg, fontWeight: Typography.semibold, color: Colors.gray900, marginBottom: Spacing.lg },
-
+  heading: { fontSize: Typography['2xl'], fontWeight: Typography.bold, color: Colors.textPrimary, marginBottom: Spacing.sm },
+  sub:     { fontSize: Typography.sm, color: Colors.textSecondary, marginBottom: Spacing['2xl'] },
+  card:    { backgroundColor: Colors.surface, borderRadius: Radius.xl, padding: Spacing.xl, borderWidth: 1, borderColor: Colors.border, marginBottom: Spacing.xl, ...Shadows.sm },
   fieldGroup: { marginBottom: Spacing.lg },
-  label:      { fontSize: Typography.sm, color: Colors.gray600, marginBottom: Spacing.sm },
-  optional:   { color: Colors.gray400 },
+  label:    { fontSize: Typography.sm, fontWeight: Typography.semibold, color: Colors.textPrimary, marginBottom: Spacing.sm },
+  optional: { fontWeight: Typography.regular, color: Colors.textMuted },
   input: {
-    backgroundColor: Colors.white,
-    borderWidth: 1,
-    borderColor: Colors.gray200,
-    borderRadius: Radius.md,
-    padding: Spacing.md,
-    fontSize: Typography.base,
-    color: Colors.gray900,
+    backgroundColor: Colors.surface2, borderWidth: 1, borderColor: Colors.border,
+    borderRadius: Radius.md, padding: Spacing.md, fontSize: Typography.base,
+    color: Colors.textPrimary,
   },
   inputError: { borderColor: Colors.danger },
-  error:      { fontSize: Typography.xs, color: Colors.danger, marginTop: 4 },
-
-  nextBtn: { marginTop: Spacing.xl },
+  error: { fontSize: Typography.xs, color: Colors.danger, marginTop: 4 },
+  btn:     { backgroundColor: Colors.primary, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center', ...Shadows.md },
+  btnText: { color: '#FFFFFF', fontSize: Typography.base, fontWeight: Typography.bold },
 })
-
-
-

@@ -10,6 +10,7 @@ import {
   RefreshControl,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BrandHeader } from '../../src/components/brand'
 import { useAppStore, selectAllJobs, selectAllScholarships } from '../../src/store'
 import {
   Card,
@@ -162,6 +163,7 @@ export default function MatchesScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <BrandHeader title="Matches" />
       {/* Tab toggle */}
       <View style={styles.tabRow}>
         <TouchableOpacity
@@ -461,12 +463,12 @@ function ScholarshipCard({ scholarship: s }: { scholarship: ScholarshipMatch }) 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-  safe:   { flex: 1, backgroundColor: Colors.gray50 },
+  safe:   { flex: 1, backgroundColor: Colors.bg },
   scroll: { padding: Spacing.lg, paddingBottom: Spacing['4xl'] },
 
   tabRow: {
     flexDirection: 'row',
-    backgroundColor: Colors.white,
+    backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
     borderBottomColor: Colors.gray100,
     paddingHorizontal: Spacing.lg,
@@ -479,7 +481,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'transparent',
   },
   tabBtnActive:     { borderBottomColor: Colors.primary },
-  tabBtnText:       { fontSize: Typography.sm, color: Colors.gray500, fontWeight: Typography.medium },
+  tabBtnText:       { fontSize: Typography.sm, color: '#9E9BBD', fontWeight: Typography.medium },
   tabBtnTextActive: { color: Colors.primary },
 
   filterRow:  { marginBottom: Spacing.lg },
@@ -487,28 +489,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
     borderRadius: Radius.full,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#E2E0F5',
     marginRight: Spacing.sm,
     borderWidth: 1,
-    borderColor: Colors.gray200,
+    borderColor: '#E2E0F5',
   },
   filterPillActive:     { backgroundColor: Colors.primaryLight, borderColor: Colors.primary },
-  filterPillText:       { fontSize: Typography.xs, color: Colors.gray600, fontWeight: Typography.medium },
+  filterPillText:       { fontSize: Typography.xs, color: '#9E9BBD', fontWeight: Typography.medium },
   filterPillTextActive: { color: Colors.primary },
   refreshBtn: {
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
     borderRadius: Radius.full,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#E2E0F5',
     borderWidth: 1,
-    borderColor: Colors.gray200,
+    borderColor: '#E2E0F5',
   },
-  refreshBtnText: { fontSize: Typography.xs, color: Colors.gray600 },
+  refreshBtnText: { fontSize: Typography.xs, color: '#9E9BBD' },
 
   sourceDivider: {
     fontSize: Typography.xs,
     fontWeight: Typography.semibold,
-    color: Colors.gray500,
+    color: '#9E9BBD',
     textTransform: 'uppercase',
     letterSpacing: 0.6,
     marginBottom: Spacing.sm,
@@ -525,9 +527,9 @@ const styles = StyleSheet.create({
 
   matchHeader:   { flexDirection: 'row', alignItems: 'flex-start', marginBottom: Spacing.sm },
   matchTitleRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, flexWrap: 'wrap' },
-  matchTitle:    { fontSize: Typography.base, fontWeight: Typography.semibold, color: Colors.gray900, flex: 1 },
-  matchSub:      { fontSize: Typography.xs, color: Colors.gray500, marginTop: 2 },
-  matchMeta:     { fontSize: Typography.xs, color: Colors.gray400, marginTop: 1 },
+  matchTitle:    { fontSize: Typography.base, fontWeight: Typography.semibold, color: '#1A1630', flex: 1 },
+  matchSub:      { fontSize: Typography.xs, color: '#9E9BBD', marginTop: 2 },
+  matchMeta:     { fontSize: Typography.xs, color: '#5A5880', marginTop: 1 },
   matchScore:    { fontSize: Typography.base, fontWeight: Typography.bold, marginLeft: Spacing.sm },
 
   liveBadge: {
@@ -543,11 +545,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.sm,
     paddingVertical: 3,
     borderRadius: Radius.full,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#E2E0F5',
   },
-  tagText: { fontSize: Typography.xs, color: Colors.gray600 },
+  tagText: { fontSize: Typography.xs, color: '#6B6589' },
 
-  reason: { fontSize: Typography.xs, color: Colors.gray500, lineHeight: 18, marginBottom: Spacing.md },
+  reason: { fontSize: Typography.xs, color: '#9E9BBD', lineHeight: 18, marginBottom: Spacing.md },
 
   matchActions: { flexDirection: 'row', gap: Spacing.sm, justifyContent: 'flex-end' },
   applyBtn: {
@@ -558,12 +560,12 @@ const styles = StyleSheet.create({
   },
   applyBtnText: { fontSize: Typography.xs, color: Colors.white, fontWeight: Typography.semibold },
   trackBtn: {
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#E2E0F5',
     borderRadius: Radius.md,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
     borderWidth: 1,
-    borderColor: Colors.gray200,
+    borderColor: '#E2E0F5',
   },
-  trackBtnText: { fontSize: Typography.xs, color: Colors.gray700 },
+  trackBtnText: { fontSize: Typography.xs, color: '#6B6589' },
 })

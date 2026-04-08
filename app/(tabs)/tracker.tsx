@@ -10,6 +10,7 @@ import {
   Modal,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BrandHeader } from '../../src/components/brand'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { format } from 'date-fns'
 import { useAppStore } from '../../src/store'
@@ -198,6 +199,7 @@ export default function TrackerScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <BrandHeader title="Tracker" />
       {/* Tab row */}
       <View style={styles.tabRow}>
         {(['jobs', 'scholarships'] as TrackerTab[]).map((t) => (
@@ -390,7 +392,7 @@ export default function TrackerScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe:   { flex: 1, backgroundColor: Colors.gray50 },
+  safe:   { flex: 1, backgroundColor: Colors.bg },
   scroll: { padding: Spacing.lg, paddingBottom: Spacing['4xl'] },
 
   tabRow: {
@@ -412,7 +414,7 @@ const styles = StyleSheet.create({
   formTitle:  { fontSize: Typography.lg, fontWeight: Typography.semibold, color: Colors.gray900, marginBottom: Spacing.lg },
   fieldLabel: { fontSize: Typography.sm, color: Colors.gray600, marginBottom: Spacing.sm, marginTop: Spacing.sm },
   input: {
-    backgroundColor: Colors.gray50,
+    backgroundColor: Colors.bg,
     borderWidth: 1,
     borderColor: Colors.gray200,
     borderRadius: Radius.md,
@@ -424,7 +426,7 @@ const styles = StyleSheet.create({
   statusPill:    { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderRadius: Radius.full, backgroundColor: Colors.gray100, borderWidth: 1, borderColor: Colors.gray200 },
   statusPillText:{ fontSize: Typography.xs, color: Colors.gray600 },
 
-  dateBtn:     { backgroundColor: Colors.gray50, borderWidth: 1, borderColor: Colors.gray200, borderRadius: Radius.md, padding: Spacing.md },
+  dateBtn:     { backgroundColor: Colors.bg, borderWidth: 1, borderColor: Colors.gray200, borderRadius: Radius.md, padding: Spacing.md },
   dateBtnText: { fontSize: Typography.base, color: Colors.gray700 },
 
   listTitle: { fontSize: Typography.lg, fontWeight: Typography.semibold, color: Colors.gray900, marginBottom: Spacing.md },
